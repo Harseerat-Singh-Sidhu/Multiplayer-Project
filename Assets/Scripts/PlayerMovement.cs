@@ -6,34 +6,64 @@ using MLAPI;
 public class PlayerMovement : NetworkBehaviour
 {
     public CharacterController characterController;
+    float xMove, yMove;
+    bool isJumping;
     public float speed = 10f;
     public float jumpHeight = 3f;
     Vector3 velocity;
     public float gravity = -9.81f;
     public LayerMask groundMask;
     public Transform groundCheck;
-    public float groundCheckRad = 0.4f;
+    public float groundCheckRad = 0.2f;
     bool isGrounded;
     //Mouse Look
+    float mouseX;
+    float mouseY;
     public Transform playerCamera;
-    public float mouseSensi = 100f;
-    float xRotation;
+    public float mouseSensitivity = 50f;
+    public float SensiMultiplier = 0.01f;
+    float xRotation,yRotation;
+    Quaternion prev_X_Rot, prev_Y_Rot;
     public float clampVal = 55f;
     // Start is called before the first frame update
     void Start()
     {
+        Application.targetFrameRate = 30;
+        if (!IsLocalPlayer)
+        {
+            playerCamera.GetComponent<Camera>().enabled = false;
+            playerCamera.GetComponent<AudioListener>().enabled = false;
+            return;
+        }
         Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
+    public float timer = 0;
+    public int temp = 0;
     void Update()
     {
+        if (temp < 30)
+        {
+            timer += Time.deltaTime;
+            temp++;
+            print(timer);
+        }
         if (!IsLocalPlayer) return;
+        GetInput();
         Move();
         Jump();
-        mouseLook();
+        MouseLook();
     }
-    
+    void GetInput()
+    {
+        xMove = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
+        yMove = Input.GetAxis("Vertical") * speed * Time.deltaTime;
+        isJumping = Input.GetButtonDown("Jump");
+        mouseX = Input.GetAxisRaw("Mouse X") * mouseSensitivity;
+        mouseY = Input.GetAxisRaw("Mouse Y") * mouseSensitivity;
+
+    }
     void Move()
     {
         isGrounded = Physics.CheckSphere(groundCheck.position, groundCheckRad, groundMask);
@@ -42,9 +72,8 @@ public class PlayerMovement : NetworkBehaviour
         {
             velocity.y = -2f;
         }
-        float x = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
-        float y = Input.GetAxis("Vertical") * speed * Time.deltaTime;
-        Vector3 move = transform.right * x + transform.forward * y;
+       
+        Vector3 move = transform.right * xMove + transform.forward * yMove;
         characterController.Move(move);
         
        
@@ -53,19 +82,21 @@ public class PlayerMovement : NetworkBehaviour
     void Jump()
     {
         velocity.y += gravity * Time.deltaTime;
-        if (Input.GetButtonDown("Jump") && isGrounded)
+        if (isJumping && isGrounded)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2 * gravity);
         }
         characterController.Move(velocity * Time.deltaTime);
     }
-    void mouseLook()
+    void MouseLook()
     {
-        float mouseX = Input.GetAxis("Mouse X") * mouseSensi * Time.deltaTime;
-        float mouseY = Input.GetAxis("Mouse Y") * mouseSensi * Time.deltaTime;
-        xRotation -= mouseY;
-        xRotation = Mathf.Clamp(xRotation, -clampVal, clampVal);
-        playerCamera.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+       
         transform.Rotate(Vector3.up * mouseX);
+
+        xRotation += mouseY;
+        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+
+        playerCamera.transform.localEulerAngles = Vector3.left * xRotation;
     }
+
 }
