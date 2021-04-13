@@ -1,12 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using MLAPI;
-using MLAPI.Spawning;
-using System.Text;
+using MLAPI.NetworkVariable;
 
 public class MenuScript : NetworkBehaviour
 {
-
+    
     public GameObject menuPanel;
     public GameObject menuCam;
     public int connectedPlayers = 0;

@@ -5,7 +5,7 @@ using MLAPI;
 using MLAPI.NetworkVariable;
 public class GunScript : NetworkBehaviour
 {
- //  public NetworkVariableInt fire = new NetworkVariableInt(new NetworkVariableSettings { WritePermission = NetworkVariablePermission.E, ReadPermission =NetworkVariablePermission.Everyone }, false);
+    public NetworkVariableInt bullets = new NetworkVariableInt(new NetworkVariableSettings { WritePermission = NetworkVariablePermission.OwnerOnly, ReadPermission =NetworkVariablePermission.Everyone }, 14);
     public Animator gunAnim;
     public bool isFiring;
     public Transform playerCam;
@@ -23,19 +23,11 @@ public class GunScript : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*  if (Input.GetButtonDown("Fire1"))
-          {
-
-
-          }
-
-          if (Input.GetButtonUp("Fire1") )
-          {
-
-
-          }
-        */
-        if (!IsLocalPlayer) return;
+        if (!IsLocalPlayer)
+        {
+            bulletCount = bullets.Value;
+            return;
+        }
         if (Input.GetButtonDown("Fire1") && timer <=0)
         {
             isFiring = true;
@@ -53,10 +45,9 @@ public class GunScript : NetworkBehaviour
 
         }
 
-     //   fire.Value = isFiring;
-      //  print(fire.Value);
         if (isFiring)
         {
+            bullets.Value--;
             GameObject muzzle = Instantiate(muzzleFlash, muzzleAnchor.position, muzzleAnchor.rotation);
             muzzle.transform.parent = muzzleAnchor;
             RaycastHit hit;
@@ -64,9 +55,7 @@ public class GunScript : NetworkBehaviour
             {
                 GameObject _hitEffect = Instantiate(hitEffect, hit.point, Quaternion.identity);
                 _hitEffect.transform.rotation = Quaternion.LookRotation(hit.normal);             
-               // Debug.Log(hit.transform.name);
-                //Debug.Log(hit.normal);
-                Destroy(_hitEffect, 4f);
+                Destroy(_hitEffect, 2f);
             }
         }
     }
