@@ -29,7 +29,7 @@ public class PlayerMovement : NetworkBehaviour
     void Start()
     {
         Application.targetFrameRate = 30;
-        if (!IsLocalPlayer)
+     if (!IsLocalPlayer)
         {
             playerCamera.GetComponent<Camera>().enabled = false;
             playerCamera.GetComponent<AudioListener>().enabled = false;
@@ -43,13 +43,13 @@ public class PlayerMovement : NetworkBehaviour
     public int temp = 0;
     void Update()
     {
-        if (temp < 30)
+      /*  if (temp < 30)
         {
             timer += Time.deltaTime;
             temp++;
-            print(timer);
-        }
-        if (!IsLocalPlayer) return;
+           // print(timer);
+        }*/
+      if (!IsLocalPlayer) return;
         GetInput();
         Move();
         Jump();
@@ -57,8 +57,8 @@ public class PlayerMovement : NetworkBehaviour
     }
     void GetInput()
     {
-        xMove = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
-        yMove = Input.GetAxis("Vertical") * speed * Time.deltaTime;
+        xMove = Input.GetAxisRaw("Horizontal") * speed * Time.deltaTime;
+        yMove = Input.GetAxisRaw("Vertical") * speed * Time.deltaTime;
         isJumping = Input.GetButtonDown("Jump");
         mouseX = Input.GetAxisRaw("Mouse X") * mouseSensitivity;
         mouseY = Input.GetAxisRaw("Mouse Y") * mouseSensitivity;
