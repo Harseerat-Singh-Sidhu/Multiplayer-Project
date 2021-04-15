@@ -10,10 +10,13 @@ public class MenuScript : NetworkBehaviour
     public GameObject menuCam;
     public int connectedPlayers = 0;
     [SerializeField] private List<Transform> spawnPoints;
-
-    public void Host()
+    private void Start()
     {
         NetworkManager.Singleton.ConnectionApprovalCallback += ApprovalCheck;
+    }
+    public void Host()
+    {
+      
         NetworkManager.Singleton.StartHost(spawnPoints[0].position, Quaternion.identity);
         menuPanel.SetActive(false);
         menuCam.SetActive(false);
@@ -21,7 +24,7 @@ public class MenuScript : NetworkBehaviour
 
     public void Join()
     {
-        NetworkManager.Singleton.ConnectionApprovalCallback += ApprovalCheck;
+
         NetworkManager.Singleton.StartClient();
         menuPanel.SetActive(false);
         menuCam.SetActive(false);

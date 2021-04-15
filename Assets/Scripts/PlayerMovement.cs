@@ -25,6 +25,7 @@ public class PlayerMovement : NetworkBehaviour
     float xRotation,yRotation;
     Quaternion prev_X_Rot, prev_Y_Rot;
     public float clampVal = 55f;
+    public GameObject playerCanvas;
     // Start is called before the first frame update
     void Start()
     {
@@ -33,16 +34,18 @@ public class PlayerMovement : NetworkBehaviour
         {
             playerCamera.GetComponent<Camera>().enabled = false;
             playerCamera.GetComponent<AudioListener>().enabled = false;
+            playerCanvas.SetActive(false);
             return;
         }
         Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
-    public float timer = 0;
-    public int temp = 0;
     void Update()
     {
+
+
+
       /*  if (temp < 30)
         {
             timer += Time.deltaTime;
