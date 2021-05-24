@@ -7,7 +7,9 @@ using UnityEngine.UI;
 using MLAPI.Messaging;
 
 public class HealthSystem : NetworkBehaviour
-{
+{ //player Script
+    public PlayerMovement playerMovementScript;
+    //
     public int maxHealth = 100;
     public Text playerHealthText;
     public NetworkVariableInt playerHealth = new NetworkVariableInt(100);
@@ -18,16 +20,14 @@ public class HealthSystem : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //get player script
+        playerMovementScript = GetComponentInParent<PlayerMovement>();
+
         renderes = GetComponentsInChildren<MeshRenderer>();
         colliders = GetComponentsInChildren<Collider>();
         cc = GetComponent<CharacterController>();
         playerHealthText.text = "" + playerHealth.Value;
-      //  var spawnPointsParent = GameObject.Find("Spawn Points");
-      //  var childCount = spawnPointsParent.transform.childCount;
-       /* for (int i = 0; i < childCount; i++)
-        {
-            spawnPoints.Add(spawnPointsParent.transform.GetChild(i));
-        }*/
+ 
 
     }
     void OnEnable()
@@ -47,7 +47,7 @@ public class HealthSystem : NetworkBehaviour
             playerHealth.Value -= damageAmount;
         if (playerHealth.Value <= 0)
         {
-          
+            playerMovementScript.DeathCount.Value++;
             playerHealth.Value = maxHealth;
             RespawnPlayerClientRpc();
             dead = true;
