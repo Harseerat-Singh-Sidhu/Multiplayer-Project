@@ -24,7 +24,6 @@ public class MenuScript : NetworkBehaviour
 
     public void Join()
     {
-
         NetworkManager.Singleton.StartClient();
         menuPanel.SetActive(false);
         menuCam.SetActive(false);

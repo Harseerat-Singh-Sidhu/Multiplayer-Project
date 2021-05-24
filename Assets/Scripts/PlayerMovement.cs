@@ -2,9 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using MLAPI;
-
+using MLAPI.NetworkVariable;
 public class PlayerMovement : NetworkBehaviour
 {
+    public PlayerController playerContr;
+    public string lclId,pcId;
+    //
+    public string playerName;
+    //
+    public NetworkVariableInt KillCount = new NetworkVariableInt(new NetworkVariableSettings
+    {
+        WritePermission = NetworkVariablePermission.OwnerOnly,
+        ReadPermission = NetworkVariablePermission.Everyone
+    });
+    public NetworkVariableInt DeathCount = new NetworkVariableInt(new NetworkVariableSettings
+    {
+        WritePermission = NetworkVariablePermission.OwnerOnly,
+        ReadPermission = NetworkVariablePermission.Everyone
+    });
     public CharacterController characterController;
     float xMove, yMove;
     bool isJumping;
@@ -22,21 +37,44 @@ public class PlayerMovement : NetworkBehaviour
     public Transform playerCamera;
     public float mouseSensitivity = 50f;
     public float SensiMultiplier = 0.01f;
-    float xRotation,yRotation;
+    float xRotation, yRotation;
     Quaternion prev_X_Rot, prev_Y_Rot;
     public float clampVal = 55f;
     public GameObject playerCanvas;
     // Start is called before the first frame update
     void Start()
     {
+      
+     //   GameObject playersParent = GameObject.FindWithTag("Players");
+      //  transform.parent = playersParent.transform.GetChild(1).transform;
+        foreach (var pc in FindObjectsOfType<PlayerController>())
+            {
+            
+            if (transform.GetComponent<NetworkObject>().OwnerClientId == pc.OwnerClientId)
+            {
+                playerContr = pc;
+                playerName = pc.playerName.Value;
+                transform.name = playerName;
+          // transform.parent =pc.transform;
+            }
+               
+            }
+        //Transform playersParent = GameObject.Find("Players").transform;
+        //    transform.parent = playersParent.transform;
+       
+
+
         Application.targetFrameRate = 30;
-     if (!IsLocalPlayer)
+        if (!IsLocalPlayer)
         {
             playerCamera.GetComponent<Camera>().enabled = false;
             playerCamera.GetComponent<AudioListener>().enabled = false;
             playerCanvas.SetActive(false);
             return;
         }
+
+       
+        
         Cursor.lockState = CursorLockMode.Locked;
     }
 
@@ -46,13 +84,13 @@ public class PlayerMovement : NetworkBehaviour
 
 
 
-      /*  if (temp < 30)
-        {
-            timer += Time.deltaTime;
-            temp++;
-           // print(timer);
-        }*/
-      if (!IsLocalPlayer) return;
+        /*  if (temp < 30)
+          {
+              timer += Time.deltaTime;
+              temp++;
+             // print(timer);
+          }*/
+        if (!IsLocalPlayer) return;
         GetInput();
         Move();
         Jump();
@@ -75,11 +113,11 @@ public class PlayerMovement : NetworkBehaviour
         {
             velocity.y = -2f;
         }
-       
+
         Vector3 move = transform.right * xMove + transform.forward * yMove;
         characterController.Move(move);
-        
-       
+
+
 
     }
     void Jump()
@@ -93,7 +131,7 @@ public class PlayerMovement : NetworkBehaviour
     }
     void MouseLook()
     {
-       
+
         transform.Rotate(Vector3.up * mouseX);
 
         xRotation += mouseY;

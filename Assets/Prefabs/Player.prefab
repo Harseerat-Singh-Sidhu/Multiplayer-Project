@@ -156,6 +156,7 @@ MonoBehaviour:
   timer: 0
   fireRate: 20
   bulletCount: 14
+  playerMovementScript: {fileID: 0}
 --- !u!95 &986163610911717046
 Animator:
   serializedVersion: 3
@@ -1006,6 +1007,7 @@ GameObject:
   - component: {fileID: -2401752615873237771}
   - component: {fileID: -999402521792251044}
   - component: {fileID: 8474110835662525682}
+  - component: {fileID: 5517702044115165041}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1061,6 +1063,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e082e1ff3b806642a70d80925366633, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playersParent: {fileID: 4934260062096276699, guid: be0c9dbbb30e18840bad5f03dc4ac2af,
+    type: 3}
+  playerContr: {fileID: 0}
+  playerName: 
+  KillCount:
+    m_InternalValue: 0
+  DeathCount:
+    m_InternalValue: 0
   characterController: {fileID: 8394352388312224434}
   speed: 7.5
   jumpHeight: 2
@@ -1152,10 +1162,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 488e366946323034cbdb68ddc6c034c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 100
   playerHealthText: {fileID: 2412289185377059439}
-  playerCanvas: {fileID: 4948262359742320323}
   playerHealth:
     m_InternalValue: 100
+  spawnPoints:
+  - {fileID: 6411392392831943398, guid: 1144b3efdedfc1c4287d2c534b998099, type: 3}
+  - {fileID: 3622416771163106404, guid: 84a06cd34b36b0047a2233253e615677, type: 3}
+  - {fileID: 5316098378854983924, guid: 2283a0a2e82b9324c8b687544f9415ad, type: 3}
+--- !u!114 &5517702044115165041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8394352388312224435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f77a4cd3d9dd05249b1492edb305a0a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerName: 
 --- !u!1 &8394352388755633406
 GameObject:
   m_ObjectHideFlags: 0

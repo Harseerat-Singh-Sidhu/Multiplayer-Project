@@ -17,7 +17,7 @@ public class MouseLook : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!IsLocalPlayer)
+        if (!IsClient)
         {
             return;
         }
