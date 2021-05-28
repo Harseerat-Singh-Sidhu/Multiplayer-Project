@@ -5,12 +5,16 @@ using UnityEngine.UI;
 
 public class PlayerCard : MonoBehaviour
 {
-    public Text playerName, killCount, deathCount;
+    public Text playerRank,playerName, killCount, deathCount;
+    public PlayerMovement playerScript;
+    public int Score;
     // Start is called before the first frame update
-  public void SetStats(string pName,int kCount,int dCount)
+  public void SetStats(int rank)
     {
-        playerName.text = pName;
-        killCount.text = string.Empty + kCount;
-        deathCount.text = string.Empty + dCount;
+        playerRank.text =""+ rank;
+        playerName.text = playerScript.playerName;
+        killCount.text = string.Empty + playerScript.KillCount.Value;
+        deathCount.text = string.Empty + playerScript.DeathCount.Value;
+        Score = playerScript.KillCount.Value;
     }
 }

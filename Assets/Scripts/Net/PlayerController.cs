@@ -40,8 +40,8 @@ public class PlayerController : NetworkBehaviour
 
         Debug.Log($"NetworkStart:: {NetworkManager.Singleton.LocalClientId} OWNER:{OwnerClientId} OS:{IsOwnedByServer}");
         myPlayerListItem = Instantiate(LobbyScene.Instance.playerListItemPrefab, Vector3.zero, Quaternion.identity);
-        
-        myPlayerListItem.transform.SetParent(LobbyScene.Instance.playerListContainer, false);
+        Manager.instance.Setup(myPlayerListItem.transform);
+      //  myPlayerListItem.transform.SetParent(LobbyScene.Instance.playerListContainer);
         //connected players
             connectedPlayers = NetworkManager.Singleton.ConnectedClients.Count;
        
@@ -49,7 +49,16 @@ public class PlayerController : NetworkBehaviour
 
         if (IsOwner)
         {
-            playerName.Value = UnityEngine.Random.Range(1000, 9999).ToString();
+           
+           // playerName.Value = UnityEngine.Random.Range(1000, 9999).ToString();
+         
+            
+            if(PlayerPrefs.GetString("PlayerName")==string.Empty)
+            {
+                print("hello");
+                PlayerPrefs.SetString("PlayerName", UnityEngine.Random.Range(1000, 9999).ToString());
+            }
+            playerName.Value = PlayerPrefs.GetString("PlayerName");
             playerColor.Value = new Color(UnityEngine.Random.Range(0.0f, 1.0f), UnityEngine.Random.Range(0.0f, 1.0f), UnityEngine.Random.Range(0.0f, 1.0f));
         }
         else
@@ -67,7 +76,11 @@ public class PlayerController : NetworkBehaviour
     public void ChangeName(string newName)
     {
         if (IsOwner)
+        {
+            PlayerPrefs.SetString("PlayerName",newName);
             playerName.Value = newName;
+        }
+            
     }
 
     // Events
@@ -103,7 +116,7 @@ public class PlayerController : NetworkBehaviour
     private void SpawnMeServerRpc(ulong clientId)
     {
         Vector3 spawnPos = Vector3.zero;
-        GameObject go = Instantiate(Player, spawnPoints[connectedPlayers].position, Quaternion.identity).gameObject;
+        GameObject go = Instantiate(Player, spawnPoints[connectedPlayers-1].position, Quaternion.identity).gameObject;
         go.GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId, null, true);
         
        

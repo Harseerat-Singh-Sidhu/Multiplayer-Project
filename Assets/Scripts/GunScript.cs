@@ -12,7 +12,11 @@ public class GunScript : NetworkBehaviour
     public Transform playerCam;
     public GameObject muzzleFlash, hitEffect;
     public Transform muzzleAnchor;
-    public float timer = 0f, fireRate;
+    public float timer = 0f;
+    public float fireRate=5f;
+
+    public float nextTimeToFire = 0;
+
     public int bulletCount = 14;
 
     //player Script
@@ -22,23 +26,33 @@ public class GunScript : NetworkBehaviour
     void Start()
 
     {
-        fireRate = 1f / 2f;
+   
         playerMovementScript = GetComponentInParent<PlayerMovement>();
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        if (GameManager.Instance.isGameOver) return;
 
         if (IsLocalPlayer)
         {
-            isFiring.Value = Input.GetMouseButtonDown(0);
-            if (isFiring.Value)
+            isFiring.Value = false;
+
+         //   isFiring.Value = Input.GetMouseButtonDown(0);
+            if (Input.GetMouseButton(0) && Time.time >= nextTimeToFire)
+            {
+           
+                nextTimeToFire = Time.time + 1 / fireRate;
+                print(nextTimeToFire);
+                ShootServerRpc();
+                isFiring.Value = true;
+            }
+      /*      if (isFiring.Value)
             {
                 ShootServerRpc();
 
-            }
+            }*/
         }
         if (isFiring.Value)
         {

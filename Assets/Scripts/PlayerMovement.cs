@@ -6,9 +6,9 @@ using MLAPI.NetworkVariable;
 public class PlayerMovement : NetworkBehaviour
 {
     public PlayerController playerContr;
-    public string lclId,pcId;
     //
     public string playerName;
+    public int Score = 0;
     //
     public NetworkVariableInt KillCount = new NetworkVariableInt(new NetworkVariableSettings
     {
@@ -81,15 +81,8 @@ public class PlayerMovement : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameManager.Instance.isGameOver) return;
 
-
-
-        /*  if (temp < 30)
-          {
-              timer += Time.deltaTime;
-              temp++;
-             // print(timer);
-          }*/
         if (!IsLocalPlayer) return;
         GetInput();
         Move();

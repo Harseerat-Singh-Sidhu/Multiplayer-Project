@@ -40,7 +40,7 @@ public class Chat : NetworkBehaviour
 		}
 
 		m_Transport = (UNetTransport)NetworkManager.Singleton.NetworkConfig.NetworkTransport;
-		
+	
 		msgData = clientName+" :- " +inputField.text;
 
 		serServerRpc(msgData);
