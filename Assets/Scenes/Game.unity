@@ -12008,6 +12008,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0d6e91a608f75d4f994eda135442541, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isGameOver: 0
+  TotalGameTime:
+    m_InternalValue: 0
+  timerText: {fileID: 1281700763}
   localPlayerCard: {fileID: 0}
   players: []
   playerCardList: []
@@ -12017,9 +12021,6 @@ MonoBehaviour:
   leaveButton: {fileID: 2036100519}
   playerCard: {fileID: 6585191445022708307, guid: 090f3598c3e6db945954776fe58c1cda,
     type: 3}
-  timerText: {fileID: 1281700763}
-  TotalGameTime:
-    m_InternalValue: 0
 --- !u!114 &877123208
 MonoBehaviour:
   m_ObjectHideFlags: 0

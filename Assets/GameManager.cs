@@ -26,7 +26,7 @@ public class GameManager: NetworkBehaviour
         ReadPermission = NetworkVariablePermission.Everyone
     });
     public Text timerText;
-    private int totaltime = 10;
+    private int totaltime = 100;
 
     public GameObject localPlayerCard;
 

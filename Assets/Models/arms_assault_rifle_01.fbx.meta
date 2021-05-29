@@ -1,0 +1,150 @@
+fileFormatVersion: 2
+guid: 10b33c4f4a28ec247817bfe41e3af2d9
+ModelImporter:
+  serializedVersion: 20200
+  internalIDToNameTable:
+  - first:
+      74: 5049511979321711895
+    second: Armature|_idle@assault_rifle_01
+  - first:
+      74: 5867016628478173737
+    second: Armature|aim_fire@assault_rifle_01
+  - first:
+      74: 1348175011234607656
+    second: Armature|aim_fire_pose@assault_rifle_01
+  - first:
+      74: -546456222139953913
+    second: Armature|aim_in@assault_rifle_01
+  - first:
+      74: 3084583471025852317
+    second: Armature|aim_out@assault_rifle_01
+  - first:
+      74: -7595948546120534111
+    second: Armature|fire@assault_rifle_01
+  - first:
+      74: -3811857521746053496
+    second: Armature|grenade_throw@assault_rifle_01
+  - first:
+      74: 5569791332562378348
+    second: Armature|holster_weapon@assault_rifle_01
+  - first:
+      74: 3329162092511438914
+    second: Armature|inspect_weapon@assault_rifle_01
+  - first:
+      74: -5979654414414919662
+    second: Armature|knife_attack_1@assault_rifle_01
+  - first:
+      74: -7837933923603588139
+    second: Armature|knife_attack_2@assault_rifle_01
+  - first:
+      74: 733101109165353824
+    second: Armature|reload_ammo_left@assault_rifle_01
+  - first:
+      74: -3466651763160171272
+    second: Armature|reload_out_of_ammo@assault_rifle_01
+  - first:
+      74: 507679957363627115
+    second: Armature|run@assault_rifle_01
+  - first:
+      74: -5766138674428010294
+    second: Armature|take_out_weapon@assault_rifle_01
+  - first:
+      74: -1206249537223906299
+    second: Armature|walk@assault_rifle_01
+  externalObjects: {}
+  materials:
+    materialImportMode: 2
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

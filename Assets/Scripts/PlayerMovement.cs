@@ -87,7 +87,7 @@ public class PlayerMovement : NetworkBehaviour
         GetInput();
         Move();
         Jump();
-        MouseLook();
+        MouseLook(mouseX,mouseY);
     }
     void GetInput()
     {
@@ -107,8 +107,17 @@ public class PlayerMovement : NetworkBehaviour
             velocity.y = -2f;
         }
 
-        Vector3 move = transform.right * xMove + transform.forward * yMove;
-        characterController.Move(move);
+        // Vector3 move = transform.right * xMove + transform.forward * yMove;
+
+        // Calculate the Direction to Move based on the tranform of the Player
+        Vector3 moveDirectionForward = transform.forward * yMove;
+        Vector3 moveDirectionSide = transform.right * xMove;//find the direction
+        Vector3 direction = (moveDirectionForward + moveDirectionSide).normalized;
+        //find the distance
+        Vector3 distance = direction * speed * Time.deltaTime;
+
+        // Apply Movement to Player
+        characterController.Move(distance);
 
 
 
@@ -122,12 +131,13 @@ public class PlayerMovement : NetworkBehaviour
         }
         characterController.Move(velocity * Time.deltaTime);
     }
-    void MouseLook()
+    public void MouseLook( float MouseX, float MouseY)
+
     {
 
-        transform.Rotate(Vector3.up * mouseX);
+        transform.Rotate(Vector3.up * MouseX);
 
-        xRotation += mouseY;
+        xRotation += MouseY;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
         playerCamera.transform.localEulerAngles = Vector3.left * xRotation;
