@@ -46,19 +46,29 @@ public class PlayerController : NetworkBehaviour
             connectedPlayers = NetworkManager.Singleton.ConnectedClients.Count;
        
         playerNameLabel = myPlayerListItem.GetComponentInChildren<TextMeshProUGUI>();
+        if (IsClient)
+        {
+            LobbyScene.instance.startButton.interactable = false;
+        }
+        if(IsHost)
+        {
+            LobbyScene.instance.startButton.interactable = true;
 
+        }
+        
         if (IsOwner)
         {
            
-           // playerName.Value = UnityEngine.Random.Range(1000, 9999).ToString();
+            playerName.Value = UnityEngine.Random.Range(1000, 9999).ToString();
          
             
             if(PlayerPrefs.GetString("PlayerName")==string.Empty)
             {
                 print("hello");
-                PlayerPrefs.SetString("PlayerName", UnityEngine.Random.Range(1000, 9999).ToString());
+            //    PlayerPrefs.SetString("PlayerName", UnityEngine.Random.Range(1000, 9999).ToString());
             }
-            playerName.Value = PlayerPrefs.GetString("PlayerName");
+            //  playerName.Value = PlayerPrefs.GetString("PlayerName");
+            playerName.Value = LobbyScene.instance.playerNameInput.text;
             playerColor.Value = new Color(UnityEngine.Random.Range(0.0f, 1.0f), UnityEngine.Random.Range(0.0f, 1.0f), UnityEngine.Random.Range(0.0f, 1.0f));
         }
         else

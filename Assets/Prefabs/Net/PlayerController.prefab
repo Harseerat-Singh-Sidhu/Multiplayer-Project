@@ -50,10 +50,11 @@ MonoBehaviour:
     m_InternalValue: {r: 0, g: 0, b: 0, a: 0}
   Player: {fileID: 8394352388312224435, guid: cbad04f876c059d4d90db8c96a5a443f, type: 3}
   connectedPlayers: 0
+  parent: {fileID: 0}
   spawnPoints:
-  - {fileID: 6411392392831943398, guid: 1144b3efdedfc1c4287d2c534b998099, type: 3}
-  - {fileID: 3622416771163106404, guid: 84a06cd34b36b0047a2233253e615677, type: 3}
-  - {fileID: 5316098378854983924, guid: 2283a0a2e82b9324c8b687544f9415ad, type: 3}
+  - {fileID: 1632735629843313317, guid: 93a4139cb8778754eb715f55f762d425, type: 3}
+  - {fileID: 5692532751945411014, guid: e5857b3f7b20ea0449b1b291af477363, type: 3}
+  - {fileID: 1796929249353283531, guid: 2427c006e9d4c87468434112f68f1c3d, type: 3}
 --- !u!114 &6078322142137293853
 MonoBehaviour:
   m_ObjectHideFlags: 0

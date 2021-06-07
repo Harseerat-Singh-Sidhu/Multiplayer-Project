@@ -15,6 +15,9 @@ using UnityEngine.UI;
 
 public class GameManager: NetworkBehaviour
 {
+    //Match Time
+    private int totaltime = 60;
+
     public bool isGameOver;
     //Game Over
    // public NetworkVariableBool isGameOver = new NetworkVariableBool(new NetworkVariableSettings
@@ -25,14 +28,15 @@ public class GameManager: NetworkBehaviour
         WritePermission = NetworkVariablePermission.ServerOnly,
         ReadPermission = NetworkVariablePermission.Everyone
     });
+    public bool isPaused;
     public Text timerText;
-    private int totaltime = 30;
+   
 
     public GameObject localPlayerCard;
 
    public List<PlayerMovement> players;
     public List<GameObject> playerCardList;
-    public Canvas leaderBoardCanvas,gameOverCanvas;
+    public Canvas leaderBoardCanvas,gameOverCanvas,pauseCanvas;
     public Text GameOverText;
     public Button leaveButton;
     public GameObject playerCard;
@@ -53,6 +57,7 @@ public class GameManager: NetworkBehaviour
     }
     private void Start()
     {
+        pauseCanvas.enabled = false;
         leaderBoardCanvas.enabled = false;
         GameOverText.gameObject.SetActive(false);
         leaveButton.gameObject.SetActive(false);
@@ -69,16 +74,42 @@ public class GameManager: NetworkBehaviour
     {
         if (isGameOver) return;
         CheckTime();
-        if (Input.GetKeyDown(KeyCode.Tab))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            updateLeaderBoard();
-            leaderBoardCanvas.enabled = true;
+            if (isPaused)
+            {
+                isPaused = false;
+                pauseCanvas.enabled = false;
+                Cursor.lockState = CursorLockMode.Locked;
+            }
+            else
+            {
+                isPaused = true;
+                pauseCanvas.enabled = true;
+                leaderBoardCanvas.enabled = false;
+                Cursor.lockState = CursorLockMode.None;
+            }
+          
 
         }
-        else if (Input.GetKeyUp(KeyCode.Tab))
+        else if (Input.GetKeyDown(KeyCode.Escape))
         {
-            leaderBoardCanvas.enabled = false;    
+           
         }
+        if (!isPaused)
+        {
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                updateLeaderBoard();
+                leaderBoardCanvas.enabled = true;
+
+            }
+            else if (Input.GetKeyUp(KeyCode.Tab))
+            {
+                leaderBoardCanvas.enabled = false;
+            }
+        }
+      
     }
     void updateLeaderBoard()
     {
@@ -182,7 +213,7 @@ public class GameManager: NetworkBehaviour
     public void GameOver()
     {
         isGameOver = true;
-        StartCoroutine("shutNetwork");
+        StartCoroutine("shutDownNetwork",1f);
        
        
         GameOverText.gameObject.SetActive(true);
@@ -192,9 +223,9 @@ public class GameManager: NetworkBehaviour
         playerCardList[0].GetComponent<Image>().color = Color.yellow;
       
     }
-    IEnumerator shutNetwork()
+    IEnumerator shutDownNetwork(float waitTime)
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(waitTime);
         NetworkManager.Singleton.Shutdown();
         leaderBoardCanvas.enabled = true;
         Cursor.lockState = CursorLockMode.None;
@@ -202,5 +233,18 @@ public class GameManager: NetworkBehaviour
     public void LeaveButton()
     {
         SceneManager.LoadScene("Lobby");
+    }
+    public void resumeButton()
+    {
+        isPaused = false;
+        pauseCanvas.enabled = false;
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+    public void QuitButton()
+    {
+        NetworkManager.Singleton.Shutdown();
+        Cursor.lockState = CursorLockMode.None;
+        Invoke("LeaveButton", 0.5f);
+      
     }
 }

@@ -106,6 +106,8 @@ public class PlayerMovement : NetworkBehaviour
         if (GameManager.Instance.isGameOver) return;
         PlayFootstepSounds();
         if (!IsLocalPlayer) return;
+        if (GameManager.Instance.isPaused) return;
+
         GetInput();
       
         SetAnimation();

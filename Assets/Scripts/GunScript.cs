@@ -42,6 +42,7 @@ public class GunScript : NetworkBehaviour
     public float currentAmmo;
     public float reloadTime;
 
+    public int bulletDamage = 10;
 
     //UI
     public Text ammoText;
@@ -86,6 +87,7 @@ public class GunScript : NetworkBehaviour
 
         if (IsLocalPlayer)
         {
+            if (GameManager.Instance.isPaused) return;
             isFiring.Value = false;
             if (isReloading) return;
             if (currentAmmo <= 0)
@@ -193,8 +195,9 @@ public class GunScript : NetworkBehaviour
     [ServerRpc]
     public void ShootServerRpc()
     {
-        
-       
+        shootAudioClientRpc();
+
+
         RaycastHit hit;
         if (Physics.Raycast(firePos.position, playerCam.forward, out hit, 100f))
         {
@@ -203,9 +206,10 @@ public class GunScript : NetworkBehaviour
 
                 ulong clientId = hit.transform.GetComponent<NetworkObject>().OwnerClientId;
                 // print("Hit player" + clientId);
-                bool isEnemyDead = hit.transform.GetComponent<HealthSystem>().TakeDamage(10);
+                bool isEnemyDead = hit.transform.GetComponent<HealthSystem>().TakeDamage(bulletDamage);
                 if (isEnemyDead)
                 {
+                   
                     playerMovementScript.KillCount.Value++;
                    //killfeed
                     string username = playerMovementScript.playerName;
@@ -220,11 +224,18 @@ public class GunScript : NetworkBehaviour
 
     }
     [ClientRpc]
-    void hitMarkClientRpc(Vector3 impactPos, Vector3 impactRot)
+    void shootAudioClientRpc()
     {
         shootAudioSource.clip = SoundClips.shootSound;
         shootAudioSource.Play();
-        //gunAnim.Play("FireAnim", 0, 0f);
+   
+
+    }
+    [ClientRpc]
+    void hitMarkClientRpc(Vector3 impactPos, Vector3 impactRot)
+    {
+      
+
         GameObject _hitEffect = Instantiate(hitEffect, impactPos, Quaternion.identity);
         _hitEffect.transform.rotation = Quaternion.LookRotation(impactRot);
 

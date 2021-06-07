@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using MLAPI.Transports.UNET;
 public class LobbyScene : MonoSingleton<LobbyScene>
 {
+    [SerializeField] public Button startButton;
     [SerializeField] public InputField IPAddInputField;
     [SerializeField] private Animator animator; 
     // Lobby UI
@@ -26,6 +27,15 @@ public class LobbyScene : MonoSingleton<LobbyScene>
         {
             instance = this;
         }
+    }
+    private void Start()
+    {
+        if (PlayerPrefs.GetString("PlayerName") == string.Empty)
+        {
+            print("hello");
+            PlayerPrefs.SetString("PlayerName", UnityEngine.Random.Range(1000, 9999).ToString());
+        }
+        playerNameInput.text ="Player" +UnityEngine.Random.Range(100, 999).ToString();
     }
     #region Buttons
     // Main
@@ -74,7 +84,20 @@ public class LobbyScene : MonoSingleton<LobbyScene>
     }
     public void OnLobbySubmitNameChange()
     {
+
+        if (!Input.GetKeyDown(KeyCode.Return))
+        {
+          
+            return;
+        }
+        if (string.IsNullOrWhiteSpace(playerNameInput.text))
+        {
+           // playerNameInput.text = PlayerPrefs.GetString("PlayerName");
+            return;
+        }
         string newName = playerNameInput.text;
+        print(newName);
+        PlayerPrefs.SetString("PlayerName", newName);
 
         if (NetworkManager.Singleton.ConnectedClients.TryGetValue(NetworkManager.Singleton.LocalClientId, out var networkedClient))
         {

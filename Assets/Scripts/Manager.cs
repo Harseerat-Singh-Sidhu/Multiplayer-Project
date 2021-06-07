@@ -21,4 +21,12 @@ public class Manager : MonoBehaviour
         playerItem.parent = playerListContainer;
         playerItem.transform.localScale = new Vector3(1, 1, 1);
     }
+    public void Quit()
+    {
+        #if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+        #else
+                 Application.Quit();
+        #endif
+    }
 }
